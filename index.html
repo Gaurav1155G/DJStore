@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b2c59">
+<title>BGMI UC Store | Secure Order Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0b2c59;
+  --navy2: #123d75;
+  --orange: #f28c28;
+  --ink: #17243a;
+  --muted: #64748b;
+  --line: #dce3ec;
+  --bg: #f3f6fa;
+  --green: #16834a;
+  --red: #dc2626;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  font-family: Inter, Arial, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.topline {
+  height: 5px;
+  background: linear-gradient(90deg, #f28c28 0 33%, #fff 33% 66%, #16834a 66%);
+}
+
+.utility {
+  background: #edf2f8;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  color: var(--navy);
+  padding: 9px 16px;
+}
+
+.utility-inner, .head-inner {
+  max-width: 1050px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+header {
+  background: var(--navy);
+  color: #fff;
+  padding: 17px 16px;
+  box-shadow: 0 4px 16px #0b2c5920;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn {
+  border: 1px solid #ffffff80;
+  background: #ffffff12;
+  color: #fff;
+  border-radius: 4px;
+  padding: 8px 11px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: background .2s var(--ease), transform .15s var(--ease);
+}
+
+.logout-btn:hover {
+  background: #ffffff28;
+}
+
+.logout-btn:active {
+  transform: scale(0.96);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 46px;
+  height: 46px;
+  border: 1px solid #ffffff66;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 15px;
+  color: #fff;
+  background: #ffffff12;
+  flex-shrink: 0;
+}
+
+.brand small {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 1.2px;
+  color: #cbd8e8;
+  font-weight: 700;
+}
+
+.brand h1 {
+  font-size: 19px;
+  margin: 3px 0 0;
+  letter-spacing: .2px;
+}
+
+.head-tag {
+  font-size: 10px;
+  font-weight: 800;
+  border: 1px solid #ffffff55;
+  padding: 8px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.container {
+  width: min(100% - 28px, 760px);
+  margin: 22px auto 40px;
+  flex: 1;
+}
+
+.notice {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-left: 4px solid var(--orange);
+  padding: 12px 13px;
+  border-radius: 5px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: #75420d;
+  margin-bottom: 17px;
+}
+
+.notice b {
+  font-size: 10px;
+  background: #ffedd5;
+  color: #9a4d08;
+  padding: 4px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px #102b4a0a;
+  margin-bottom: 17px;
+  animation: cardFadeIn .32s var(--ease) both;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+  animation: shakeError .35s ease;
+}
+
+.card-head {
+  padding: 14px 17px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-head h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 14px;
+}
+
+.tag {
+  font-size: 9px;
+  color: var(--navy);
+  font-weight: 800;
+  border: 1px solid #c8d5e5;
+  background: #fff;
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+
+.card-body {
+  padding: 18px 17px;
+}
+
+.intro {
+  text-align: center;
+  padding: 6px 0 16px;
+}
+
+.intro h2 {
+  font-size: 21px;
+  color: var(--navy);
+  margin: 0 0 7px;
+}
+
+.intro p {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Grid & Packages */
+.packages {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.package {
+  position: relative;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 18px 10px 15px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+  transition: transform .2s var(--ease), border-color .2s var(--ease), background-color .2s var(--ease), box-shadow .2s var(--ease);
+  min-height: 145px;
+  color: inherit;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.package:hover {
+  border-color: #8ca6c8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px #0b2c590d;
+}
+
+.package:active {
+  transform: translateY(0);
+}
+
+.package.selected {
+  border-color: var(--navy);
+  background: #f3f7fc;
+  box-shadow: inset 0 0 0 1px var(--navy), 0 4px 12px #0b2c5912;
+}
+
+.package .check-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+
+.package.selected .check-badge {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.package .uc-icon {
+  font-size: 24px;
+  margin: 2px 0 10px;
+}
+
+.package .uc {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.package .price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 4px;
+  transition: background .2s, color .2s;
+}
+
+.package.selected .price {
+  background: var(--navy);
+  color: #fff;
+}
+
+.package .popular {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #6d4aff, #845ef7);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  box-shadow: 0 2px 6px #6d4aff40;
+}
+
+.package input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Form inputs */
+.field {
+  margin-top: 18px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+  gap: 8px;
+}
+
+.field label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #29384d;
+  margin-bottom: 7px;
+}
+
+.label-row label {
+  margin-bottom: 0;
+}
+
+.utr-counter {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--muted);
+  background: #f1f5f9;
+  padding: 3px 7px;
+  border-radius: 4px;
+  transition: background .2s, color .2s;
+}
+
+.utr-counter.complete {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.required {
+  color: var(--red);
+}
+
+input[type=text] {
+  width: 100%;
+  height: 46px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0 13px;
+  font: 600 14px Inter, sans-serif;
+  outline: none;
+  color: var(--ink);
+  background: #fff;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+
+input[type=text]::placeholder {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+input[type=text]:focus {
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3.5px #0b2c5915;
+}
+
+input[type=text].input-error {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px #dc262615;
+}
+
+input[type=text].input-valid {
+  border-color: #16a34a;
+}
+
+.hint {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.alert-msg {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 5px;
+  margin-top: 12px;
+  line-height: 1.5;
+  display: none;
+}
+
+.alert-msg.show {
+  display: block;
+  animation: cardFadeIn .2s var(--ease);
+}
+
+.alert-msg.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+}
+
+.alert-msg.info {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+}
+
+.alert-msg.ok {
+  background: #effaf3;
+  border: 1px solid #b7e4c7;
+  color: #166534;
+}
+
+/* Buttons */
+.btn {
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .4px;
+  padding: 14px 16px;
+  cursor: pointer;
+  margin-top: 16px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background .2s var(--ease), transform .15s var(--ease), opacity .2s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--navy2);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #64748b;
+  margin-top: 9px;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #475569;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ffffff55;
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .65s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Step indicator */
+.steps {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0 0 16px;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #8290a3;
+  padding: 10px 4px;
+  border-bottom: 3px solid #dbe2eb;
+  transition: color .25s, border-color .25s;
+}
+
+.step.active {
+  color: var(--navy);
+  border-color: var(--orange);
+}
+
+.step.done {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Payment & QR */
+.qr-box {
+  text-align: center;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 15px;
+}
+
+.qr-box img {
+  width: min(100%, 240px);
+  height: auto;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px #00000008;
+}
+
+.payment-total {
+  background: #eef4fb;
+  border: 1px solid #d6e2f0;
+  padding: 12px 14px;
+  border-radius: 6px;
+  margin-bottom: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.payment-total strong {
+  font-size: 18px;
+  color: var(--navy);
+}
+
+.summary-meta {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.small-note {
+  font-size: 10px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+
+/* Green Self-Declaration Card (Screenshot Style) */
+.declaration-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 15px;
+  padding: 14px 15px;
+  background: #eefbf3;
+  border: 1.5px solid #86efac;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+
+.declaration-box:hover {
+  background: #e3f9ec;
+  border-color: #4ade80;
+}
+
+.declaration-box.checked {
+  background: #dcfce7;
+  border-color: #16a34a;
+  box-shadow: 0 3px 10px #16a34a14;
+}
+
+.declaration-box input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: #15803d;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.declaration-content strong {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #14532d;
+  margin-bottom: 4px;
+}
+
+.declaration-content span {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #166534;
+}
+
+/* Status Box & Receipt */
+.status-banner {
+  padding: 13px 14px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.status-banner.success {
+  background: #effaf3;
+  border: 1px solid #b7e4c7;
+  color: #166534;
+}
+
+.status-banner.warning {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+
+.status-banner.error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+.receipt-box {
+  margin-top: 14px;
+  background: #f8fafc;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 11px;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e2e8f0;
+  gap: 10px;
+}
+
+.receipt-row:last-child {
+  border-bottom: 0;
+}
+
+.receipt-row span {
+  color: var(--muted);
+}
+
+.receipt-row strong {
+  color: var(--ink);
+  text-align: right;
+}
+
+footer {
+  background: #10233f;
+  color: #c4d0df;
+  text-align: center;
+  padding: 20px 14px;
+  font-size: 10px;
+  line-height: 1.8;
+  margin-top: auto;
+}
+
+footer strong {
+  color: #fff;
+}
+
+@media (max-width: 430px) {
+  .head-tag { font-size: 8px; padding: 7px; }
+  .brand h1 { font-size: 16px; }
+  .packages { gap: 9px; }
+  .package { min-height: 136px; padding: 15px 7px; }
+  .package .uc { font-size: 17px; }
+  .package .price { font-size: 14px; }
+  .container { width: calc(100% - 20px); margin-top: 14px; }
+  .declaration-box { padding: 12px; gap: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="topline"></div>
+<div class="utility">
+  <div class="utility-inner">
+    <span>BGMI UC ORDER PORTAL</span>
+    <span>ONLINE ORDER REQUEST</span>
+  </div>
+</div>
+
+<header>
+  <div class="head-inner">
+    <div class="brand">
+      <div class="brand-mark">UC</div>
+      <div>
+        <small>DIGITAL GAME CURRENCY</small>
+        <h1>BGMI UC STORE</h1>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="head-tag">ORDER PORTAL</div>
+      <button class="logout-btn hidden" id="logoutBtn" type="button">LOGOUT ↗</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="notice">
+    <b>NOTICE</b>
+    <span>Select your UC package and enter your BGMI Player ID carefully. Orders remain pending until payment is manually checked.</span>
+  </div>
+
+  <!-- LOGIN CARD -->
+  <section class="card" id="loginCard">
+    <div class="card-head">
+      <h2>Access Code Verification</h2>
+      <span class="tag">SECURE LOGIN</span>
+    </div>
+    <div class="card-body">
+      <div class="intro">
+        <h2>Restricted Portal Access</h2>
+        <p>Enter the access code issued by the store admin to open the BGMI UC order portal.</p>
+      </div>
+      <form id="loginForm" novalidate>
+        <div class="field" style="margin-top:0">
+          <label for="bookingCodeInput">ACCESS / BOOKING CODE <span class="required">*</span></label>
+          <input id="bookingCodeInput" type="text" autocomplete="off" spellcheck="false" placeholder="Enter your access code" required>
+        </div>
+        <div id="loginAlert" class="alert-msg" role="status" aria-live="polite"></div>
+        <button class="btn" id="verifyLoginBtn" type="submit">VERIFY CODE &amp; OPEN PORTAL →</button>
+      </form>
+      <p class="small-note">Access codes are verified live from the store admin's official Google Sheet.</p>
+    </div>
+  </section>
+
+  <!-- MAIN PORTAL WRAPPER -->
+  <div id="portalWrapper" class="hidden">
+    <div class="steps">
+      <div class="step active" id="step1">1. SELECT PACKAGE</div>
+      <div class="step" id="step2">2. PAYMENT</div>
+      <div class="step" id="step3">3. ORDER STATUS</div>
+    </div>
+
+    <!-- STEP 1: SELECT PACKAGE -->
+    <section class="card" id="selectCard">
+      <div class="card-head">
+        <h2>Select UC Package</h2>
+        <span class="tag">6 PACKAGES</span>
+      </div>
+      <div class="card-body">
+        <div class="intro">
+          <h2>Choose Your UC</h2>
+          <p>Select one package and enter your numeric BGMI Character ID below.</p>
+        </div>
+
+        <div class="packages" id="packages">
+          <label class="package">
+            <input type="radio" name="package" value="1800|299">
+            <span class="check-badge">✓</span>
+            <div class="uc-icon">🎟️</div>
+            <div class="uc">1,800 UC</div>
+            <div class="price">INR 299</div>
+          </label>
+          <label class="package">
+            <input type="radio" name="package" value="8100|599">
+            <span class="popular">POPULAR</span>
+            <span class="check-badge">✓</span>
+            <div class="uc-icon">🎟️</div>
+            <div class="uc">8,100 UC</div>
+            <div class="price">INR 599</div>
+          </label>
+          <label class="package">
+            <input type="radio" name="package" value="16200|999">
+            <span class="check-badge">✓</span>
+            <div class="uc-icon">🎟️</div>
+            <div class="uc">16,200 UC</div>
+            <div class="price">INR 999</div>
+          </label>
+          <label class="package">
+            <input type="radio" name="package" value="32400|1899">
+            <span class="check-badge">✓</span>
+            <div class="uc-icon">🎟️</div>
+            <div class="uc">32,400 UC</div>
+            <div class="price">INR 1,899</div>
+          </label>
+          <label class="package">
+            <input type="radio" name="package" value="64800|3499">
+            <span class="check-badge">✓</span>
+            <div class="uc-icon">🎟️</div>
+            <div class="uc">64,800 UC</div>
+            <div class="price">INR 3,499</div>
+          </label>
+          <label class="package">
+            <input type="radio" name="package" value="129999|6599">
+            <span class="check-badge">✓</span>
+            <div class="uc-icon">🎟️</div>
+            <div class="uc">129,999 UC</div>
+            <div class="price">INR 6,599</div>
+          </label>
+        </div>
+
+        <div class="field">
+          <label for="playerId">BGMI PLAYER ID (CHARACTER ID) <span class="required">*</span></label>
+          <input id="playerId" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="15" placeholder="e.g. 5123456789">
+          <div class="hint">Only numeric Player ID (5 to 15 digits) is required. Never share your password or OTP.</div>
+        </div>
+
+        <div id="step1Alert" class="alert-msg error" role="alert"></div>
+
+        <button class="btn" id="continueBtn" type="button" disabled>CONTINUE TO PAYMENT →</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: PAYMENT -->
+    <section class="card hidden" id="paymentCard">
+      <div class="card-head">
+        <h2>Payment Details</h2>
+        <span class="tag">STEP 2</span>
+      </div>
+      <div class="card-body">
+        <div class="payment-total">
+          <div>
+            <strong id="chosenPackage" style="font-size:15px;display:block">Selected package</strong>
+            <div class="summary-meta" id="chosenPlayerId">Player ID: -</div>
+          </div>
+          <strong id="chosenPrice">₹0</strong>
+        </div>
+
+        <div class="qr-box">
+          <p style="font-size:11px;font-weight:800;color:#34445b;margin:0 0 12px">SCAN THE OFFICIAL PAYMENT QR</p>
+          <img src="https://pvtbro.carrd.co/assets/images/image01.jpg?v=efe9faee" alt="Official payment QR code" loading="eager">
+          <p class="small-note">Scan and pay the exact amount shown above. Never share your UPI PIN or OTP.</p>
+        </div>
+
+        <!-- 12-Digit UTR Number Field -->
+        <div class="field">
+          <div class="label-row">
+            <label for="utrInput">UPI Transaction ID / 12-Digit UTR Number <span class="required">*</span></label>
+            <span class="utr-counter" id="utrCounter">0 / 12</span>
+          </div>
+          <input id="utrInput" type="text" inputmode="numeric" pattern="[0-9]{12}" autocomplete="off" maxlength="12" placeholder="Enter 12-digit UTR / UPI Ref No. (e.g. 412345678901)">
+          <div class="hint">Find the 12-digit UTR / UPI Reference Number in your payment app's transaction history.</div>
+        </div>
+
+        <!-- Green Self-Declaration Box -->
+        <label class="declaration-box" id="declarationBox" for="paidCheck">
+          <input type="checkbox" id="paidCheck">
+          <div class="declaration-content">
+            <strong>Self-Declaration of Payment</strong>
+            <span>I hereby declare that I have paid the order amount via the official QR code above and entered a genuine 12-digit UTR reference number.</span>
+          </div>
+        </label>
+
+        <div id="step2Alert" class="alert-msg error" role="alert"></div>
+
+        <button class="btn" id="submitOrder" type="button" disabled>SUBMIT ORDER REQUEST</button>
+        <button class="btn btn-secondary" id="backBtn" type="button">← CHANGE PACKAGE OR PLAYER ID</button>
+        <p class="small-note">Please get parent/guardian approval before making any payment.</p>
+      </div>
+    </section>
+
+    <!-- STEP 3: STATUS -->
+    <section class="card hidden" id="statusCard">
+      <div class="card-head">
+        <h2>Order Request Status</h2>
+        <span class="tag">STEP 3</span>
+      </div>
+      <div class="card-body">
+        <div class="status-banner success" id="statusMessage">Your order request has been submitted.</div>
+
+        <div class="receipt-box" id="receiptBox">
+          <div class="receipt-row"><span>Order Reference</span><strong id="recOrderId">-</strong></div>
+          <div class="receipt-row"><span>BGMI Player ID</span><strong id="recPlayerId">-</strong></div>
+          <div class="receipt-row"><span>UC Package</span><strong id="recPackage">-</strong></div>
+          <div class="receipt-row"><span>Amount Paid</span><strong id="recAmount">-</strong></div>
+          <div class="receipt-row"><span>12-Digit UTR / Ref No.</span><strong id="recUtr">-</strong></div>
+          <div class="receipt-row"><span>Verification Status</span><strong style="color:var(--orange)">PENDING VERIFICATION</strong></div>
+        </div>
+
+        <p class="small-note">Take a screenshot of this receipt for reference. UC delivery is processed once the store admin verifies the UTR payment.</p>
+        <button class="btn" id="newOrder" type="button">CREATE ANOTHER ORDER</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <strong>BGMI UC STORE</strong><br>
+  Order requests are subject to manual payment verification and availability.<br>
+  Never share your account password, OTP, or UPI PIN.
+</footer>
+
+<script>
+const LOGIN_CODES_API_URL = "https://docs.google.com/spreadsheets/d/1kLeQRiNJh1mOtOEUwmZpTzst-7o4OTqmITFf5GtEsVg/export?format=csv";
+/* Paste your deployed Google Apps Script Web App URL below to save orders to Google Sheets */
+const SHEETS_WEB_APP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+const $ = id => document.getElementById(id);
+const cards = ["selectCard", "paymentCard", "statusCard"];
+let selected = null;
+
+/* Utility: Show formatted inline alerts */
+function setAlert(el, message, type = "info") {
+  if (!message) {
+    el.className = "alert-msg";
+    el.textContent = "";
+    return;
+  }
+  el.className = `alert-msg show ${type}`;
+  el.textContent = message;
+}
+
+/* CSV Parser supporting quoted values and all rows (including Row 1) */
+function parseLoginCSV(text) {
+  return text
+    .split(/\r?\n/)
+    .filter(line => line.trim())
+    .map(line => line.split(",").map(cell => cell.trim().replace(/^"|"$/g, "")));
+}
+
+/* Reset Payment Step Controls */
+function resetPaymentControls(clearUtr = true) {
+  if (clearUtr) {
+    $("utrInput").value = "";
+    $("utrInput").classList.remove("input-error", "input-valid");
+    $("utrCounter").textContent = "0 / 12";
+    $("utrCounter").classList.remove("complete");
+  }
+  $("paidCheck").checked = false;
+  $("declarationBox").classList.remove("checked");
+  $("submitOrder").disabled = true;
+  setAlert($("step2Alert"), "");
+}
+
+/* Reset Order Flow completely (used on New Order & Logout) */
+function resetOrderFlow() {
+  selected = null;
+  $("playerId").value = "";
+  $("playerId").classList.remove("input-error");
+  setAlert($("step1Alert"), "");
+  $("continueBtn").disabled = true;
+  resetPaymentControls(true);
+
+  document.querySelectorAll('input[name="package"]').forEach(r => { r.checked = false; });
+  document.querySelectorAll(".package").forEach(p => p.classList.remove("selected"));
+  showStep("selectCard", false);
+}
+
+function unlockPortal(code) {
+  sessionStorage.setItem("bgmi_uc_verified_code", code);
+  $("loginCard").classList.add("hidden");
+  $("portalWrapper").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+}
+
+function lockPortal() {
+  sessionStorage.removeItem("bgmi_uc_verified_code");
+  resetOrderFlow();
+  $("portalWrapper").classList.add("hidden");
+  $("loginCard").classList.remove("hidden");
+  $("logoutBtn").classList.add("hidden");
+  $("bookingCodeInput").value = "";
+  setAlert($("loginAlert"), "");
+}
+
+/* Switch active card & update step progress bar */
+function showStep(which, scroll = true) {
+  const activeIdx = cards.indexOf(which);
+  cards.forEach(id => $(id).classList.toggle("hidden", id !== which));
+
+  ["step1", "step2", "step3"].forEach((id, i) => {
+    const stepEl = $(id);
+    stepEl.classList.toggle("active", i === activeIdx);
+    stepEl.classList.toggle("done", i < activeIdx);
+  });
+
+  if (scroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+/* Login Form Submission */
+$("loginForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const enteredCode = $("bookingCodeInput").value.trim();
+
+  if (!enteredCode) {
+    setAlert($("loginAlert"), "Please enter your access code first.", "error");
+    $("bookingCodeInput").focus();
+    return;
+  }
+
+  const btn = $("verifyLoginBtn");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> VERIFYING CODE...';
+  setAlert($("loginAlert"), "Checking access code with Google Sheets...", "info");
+
+  try {
+    const response = await fetch(LOGIN_CODES_API_URL, { cache: "no-store" });
+    if (!response.ok) throw new Error("Sheet request failed");
+
+    const rows = parseLoginCSV(await response.text());
+    const validCodes = new Set();
+
+    for (let i = 0; i < rows.length; i++) {
+      for (let j = 0; j < rows[i].length; j++) {
+        const cellVal = (rows[i][j] || "").trim().toLowerCase();
+        if (cellVal && cellVal !== "code" && cellVal !== "access code" && cellVal !== "booking code") {
+          validCodes.add(cellVal);
+        }
+      }
+    }
+
+    if (validCodes.has(enteredCode.toLowerCase())) {
+      setAlert($("loginAlert"), "Access code verified! Opening portal...", "ok");
+      setTimeout(() => unlockPortal(enteredCode), 250);
+    } else {
+      setAlert($("loginAlert"), "Invalid access code. Please check your code with the store admin.", "error");
+      $("loginCard").classList.remove("shake");
+      void $("loginCard").offsetWidth;
+      $("loginCard").classList.add("shake");
+    }
+  } catch (error) {
+    setAlert($("loginAlert"), "Unable to connect to Google Sheets. Ensure the sheet is shared as 'Anyone with the link — Viewer'.", "error");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "VERIFY CODE & OPEN PORTAL →";
+  }
+});
+
+$("logoutBtn").addEventListener("click", lockPortal);
+
+/* Auto-unlock if code exists in current session */
+const rememberedCode = sessionStorage.getItem("bgmi_uc_verified_code");
+if (rememberedCode) unlockPortal(rememberedCode);
+
+/* Step 1: Package Selection & Player ID Live Input Filtering */
+function updateContinueButtonState() {
+  const pid = $("playerId").value.trim();
+  $("continueBtn").disabled = !(selected && pid.length >= 5);
+}
+
+document.querySelectorAll('input[name="package"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    selected = radio.value.split("|");
+    document.querySelectorAll(".package").forEach(p => {
+      p.classList.toggle("selected", p.querySelector("input").checked);
+    });
+    resetPaymentControls(false);
+    setAlert($("step1Alert"), "");
+    updateContinueButtonState();
+  });
+});
+
+$("playerId").addEventListener("input", (e) => {
+  const cleaned = e.target.value.replace(/\D/g, "");
+  if (e.target.value !== cleaned) {
+    e.target.value = cleaned;
+  }
+  $("playerId").classList.remove("input-error");
+  setAlert($("step1Alert"), "");
+  updateContinueButtonState();
+});
+
+/* Continue to Step 2 */
+$("continueBtn").addEventListener("click", () => {
+  const pid = $("playerId").value.trim();
+
+  if (!selected) {
+    setAlert($("step1Alert"), "Please select a UC package above.", "error");
+    return;
+  }
+
+  if (!/^[0-9]{5,15}$/.test(pid)) {
+    $("playerId").classList.add("input-error");
+    setAlert($("step1Alert"), "Please enter a valid numeric BGMI Player ID (5 to 15 digits).", "error");
+    $("playerId").focus();
+    return;
+  }
+
+  $("chosenPackage").textContent = Number(selected[0]).toLocaleString("en-IN") + " UC Package";
+  $("chosenPlayerId").textContent = "BGMI Player ID: " + pid;
+  $("chosenPrice").textContent = "₹" + Number(selected[1]).toLocaleString("en-IN");
+
+  resetPaymentControls(false);
+  updateSubmitButtonState();
+  showStep("paymentCard");
+});
+
+/* Step 2: 12-Digit UTR Input & Self-Declaration Validation */
+function updateSubmitButtonState() {
+  const utr = $("utrInput").value.trim();
+  const isUtrValid = /^[0-9]{12}$/.test(utr);
+  const isDeclared = $("paidCheck").checked;
+  $("submitOrder").disabled = !(isUtrValid && isDeclared);
+}
+
+$("utrInput").addEventListener("input", (e) => {
+  const cleaned = e.target.value.replace(/\D/g, "").slice(0, 12);
+  if (e.target.value !== cleaned) {
+    e.target.value = cleaned;
+  }
+
+  const len = cleaned.length;
+  const counter = $("utrCounter");
+  counter.textContent = len === 12 ? "12 / 12 ✓" : `${len} / 12`;
+  counter.classList.toggle("complete", len === 12);
+
+  $("utrInput").classList.remove("input-error");
+  $("utrInput").classList.toggle("input-valid", len === 12);
+  setAlert($("step2Alert"), "");
+  updateSubmitButtonState();
+});
+
+$("paidCheck").addEventListener("change", () => {
+  $("declarationBox").classList.toggle("checked", $("paidCheck").checked);
+  setAlert($("step2Alert"), "");
+  updateSubmitButtonState();
+});
+
+$("backBtn").addEventListener("click", () => {
+  resetPaymentControls(false);
+  showStep("selectCard");
+});
+
+/* Submit Order Request */
+$("submitOrder").addEventListener("click", async () => {
+  const pid = $("playerId").value.trim();
+  const utr = $("utrInput").value.trim();
+
+  if (!/^[0-9]{12}$/.test(utr)) {
+    $("utrInput").classList.add("input-error");
+    setAlert($("step2Alert"), "Please enter a valid 12-digit UTR / UPI Reference Number.", "error");
+    $("utrInput").focus();
+    return;
+  }
+
+  if (!selected || !$("paidCheck").checked) return;
+
+  const orderId = "UC-" + Date.now().toString().slice(-6);
+  const formattedUC = Number(selected[0]).toLocaleString("en-IN") + " UC";
+  const formattedAmount = "₹" + Number(selected[1]).toLocaleString("en-IN");
+
+  const order = {
+    orderId: orderId,
+    accessCode: sessionStorage.getItem("bgmi_uc_verified_code") || "UNKNOWN",
+    playerId: pid,
+    package: selected[0] + " UC",
+    amount: selected[1],
+    utrNumber: utr,
+    paymentDeclaration: "Customer self-declared paid with 12-digit UTR",
+    status: "PENDING VERIFICATION",
+    createdAt: new Date().toISOString()
+  };
+
+  const btn = $("submitOrder");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> SUBMITTING ORDER...';
+
+  const statusBox = $("statusMessage");
+
+  if (SHEETS_WEB_APP_URL.startsWith("https://script.google.com/")) {
+    try {
+      await fetch(SHEETS_WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(order)
+      });
+      statusBox.className = "status-banner success";
+      statusBox.textContent = "Your order request has been sent! Status: PENDING VERIFICATION. The store admin will verify your UTR payment before processing UC delivery.";
+    } catch (e) {
+      statusBox.className = "status-banner error";
+      statusBox.textContent = "Network error: The order could not be sent to Google Sheets. Please share a screenshot of the receipt below with the store admin.";
+    }
+  } else {
+    statusBox.className = "status-banner warning";
+    statusBox.textContent = "Your order has been successfully placed!  Your UC will be delivered to your BGMI account within 10 minutes.  Thank you for choosing our services. We truly appreciate your trust and support!  DJ Official UC Store";
+  }
+
+  // Populate Receipt Details
+  $("recOrderId").textContent = orderId;
+  $("recPlayerId").textContent = pid;
+  $("recPackage").textContent = formattedUC;
+  $("recAmount").textContent = formattedAmount;
+  $("recUtr").textContent = utr;
+
+  btn.textContent = "SUBMIT ORDER REQUEST";
+  showStep("statusCard");
+});
+
+$("newOrder").addEventListener("click", resetOrderFlow);
+</script>
+</body>
+</html>
